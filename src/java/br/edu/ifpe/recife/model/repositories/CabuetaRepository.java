@@ -11,7 +11,9 @@ package br.edu.ifpe.recife.model.repositories;
  */
 public class CabuetaRepository {
     
-    public static void creat(){
+    private static List<Estudante> estudantes;
+    
+    public static void create(){
         
     }
     public static void read(){
