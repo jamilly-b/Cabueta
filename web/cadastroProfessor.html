@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Estudante</title>
+    <title>Cadastrar Professor</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -73,13 +73,13 @@
 </head>
 <body>
     <div>
-        <h1>Cadastrar estudante</h1>
-        <form method="post" action="CadastroEstudanteServlet"> 
-            <label for="codigo">Código do estudante:</label>
-            <input type="text" id="codigo" name="codigo" placeholder="Código do estudante" required>
+        <h1>Cadastrar professor</h1>
+        <form method="post" action="CadastroProfessorServlet"> 
+            <label for="codigo">Código do professor: </label>
+            <input type="text" id="codigo" name="codigo" placeholder="Código" required>
             
-            <label for="nome">Nome do estudante:</label>
-            <input type="text" id="nome" name="nome" placeholder="Nome do estudante" required>
+            <label for="nome">Nome do professor:</label>
+            <input type="text" id="nome" name="nome" placeholder="Nome" required>
             
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" placeholder="Email" required>
@@ -87,8 +87,6 @@
             <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha" placeholder="Senha" required>
         
-            <label for="anoEntrada">Ano de Entrada do Estudante:</label>
-            <input type="number" id="anoEntrada" name="anoEntrada" min="1990" max="2024" step="1" required>
             <br>
             <input type="submit" value="Enviar">
         </form>   

@@ -1,7 +1,7 @@
 package br.edu.ifpe.recife.controllers;
 
-import br.edu.ifpe.recife.model.entities.Estudante;
-import br.edu.ifpe.recife.model.repositories.EstudanteRepository;
+import br.edu.ifpe.recife.model.entities.Professor;
+import br.edu.ifpe.recife.model.repositories.ProfessorRepository;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jamilly
  */
-@WebServlet(name = "CadastroEstudanteServlet", urlPatterns = {"/CadastroEstudanteServlet"})
-public class CadastroEstudanteServlet extends HttpServlet {
+@WebServlet(name = "CadastroProfessorServlet", urlPatterns = {"/CadastroProfessorServlet"})
+public class CadastroProfessorServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -48,25 +48,23 @@ public class CadastroEstudanteServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
-        int ano = Integer.parseInt(request.getParameter("anoEntrada"));
         
-        Estudante e = new Estudante();
+        Professor p = new Professor();
         
-        e.setNome(nome);
-        e.setCodigo(codigo);
-        e.setEmail(email);
-        e.setSenha(senha);
-        e.setAnoEntrada(ano);
+        p.setNome(nome);
+        p.setCodigo(codigo);
+        p.setEmail(email);
+        p.setSenha(senha);
         
-        EstudanteRepository.create(e);
+        ProfessorRepository.create(p);
         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* Cadastro de estudante */
+            /* Cadastro do professor */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Estudante Cadastrado</title>");
+            out.println("<title>Professor Cadastrado</title>");
             out.println("<style>");
             out.println("  body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }");
             out.println("  h1 { margin-top: 20px; }");
@@ -75,7 +73,7 @@ public class CadastroEstudanteServlet extends HttpServlet {
             out.println("</style>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>O estudante " + e.getNome() + " foi cadastrado.</h1>");
+            out.println("<h1>O professor " + p.getNome() + " foi cadastrado.</h1>");
             out.println("<a href='index.html'>Voltar para página inicial</a>");
             out.println("</body>");
             out.println("</html>");

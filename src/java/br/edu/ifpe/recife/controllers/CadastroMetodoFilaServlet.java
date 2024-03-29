@@ -1,7 +1,7 @@
 package br.edu.ifpe.recife.controllers;
 
-import br.edu.ifpe.recife.model.entities.Estudante;
-import br.edu.ifpe.recife.model.repositories.EstudanteRepository;
+import br.edu.ifpe.recife.model.entities.MetodoFila;
+import br.edu.ifpe.recife.model.repositories.MetodoFilaRepository;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jamilly
  */
-@WebServlet(name = "CadastroEstudanteServlet", urlPatterns = {"/CadastroEstudanteServlet"})
-public class CadastroEstudanteServlet extends HttpServlet {
+@WebServlet(name = "CadastroMetodoFilaServlet", urlPatterns = {"/CadastroMetodoFilaServlet"})
+public class CadastroMetodoFilaServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -45,24 +45,20 @@ public class CadastroEstudanteServlet extends HttpServlet {
             throws ServletException, IOException {
         
         int codigo = Integer.parseInt(request.getParameter("codigo"));
-        String nome = request.getParameter("nome");
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        int ano = Integer.parseInt(request.getParameter("anoEntrada"));
+        String descricaoCurta = request.getParameter("descricaoCurta");
+        String descricaoLonga = request.getParameter("descricaoLonga");
         
-        Estudante e = new Estudante();
+        MetodoFila mf = new MetodoFila();
         
-        e.setNome(nome);
-        e.setCodigo(codigo);
-        e.setEmail(email);
-        e.setSenha(senha);
-        e.setAnoEntrada(ano);
+        mf.setCodigo(codigo);
+        mf.setDescricaoCurta(descricaoCurta);
+        mf.setDescricaoLonga(descricaoLonga);
         
-        EstudanteRepository.create(e);
+        MetodoFilaRepository.create(mf);
         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* Cadastro de estudante */
+            /* Cadastro de MetodoFila */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -75,11 +71,10 @@ public class CadastroEstudanteServlet extends HttpServlet {
             out.println("</style>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>O estudante " + e.getNome() + " foi cadastrado.</h1>");
+            out.println("<h1>O Metodo de Fila " + mf.getCodigo()+ " foi cadastrado.</h1>");
             out.println("<a href='index.html'>Voltar para página inicial</a>");
             out.println("</body>");
             out.println("</html>");
-
         }            
     }
     /**

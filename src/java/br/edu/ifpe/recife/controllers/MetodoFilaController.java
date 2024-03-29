@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.edu.ifpe.recife.controllers;
 
-import br.edu.ifpe.recife.model.entities.Estudante;
-import br.edu.ifpe.recife.model.repositories.EstudanteRepository;
+import br.edu.ifpe.recife.model.entities.MetodoFila;
+import br.edu.ifpe.recife.model.repositories.MetodoFilaRepository;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -13,10 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ALUNO
+ * @author jamilly
  */
-@WebServlet(name = "EstudanteController", urlPatterns = {"/EstudanteController"})
-public class EstudanteController extends HttpServlet {
+@WebServlet(name = "MetodoFilaController", urlPatterns = {"/MetodoFilaController"})
+public class MetodoFilaController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -31,27 +36,26 @@ public class EstudanteController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if (request.getParameter("codigo") != null) {
+            if (request.getParameter("codigo") != null) {
 
             int codigo = Integer.parseInt(request.getParameter("codigo"));
-            
+
             /*
-                 dentro deste if está o código que apresenta o 
-                 formulário de alteração
-                */
+                dentro deste if está o código que apresenta o 
+                formulário de alteração
+            */
             if (request.getParameter("op") != null) {
 
                 if (request.getParameter("op").equals("edit")) {
 
-                    Estudante eEdit = EstudanteRepository.read(codigo);
+                    MetodoFila mfEdit = MetodoFilaRepository.read(codigo);
 
                     response.setContentType("text/html;charset=UTF-8");
                     try (PrintWriter out = response.getWriter()) {
-                        /* Altera o estudante */
                         out.println("<!DOCTYPE html>");
                         out.println("<html>");
                         out.println("<head>");
-                        out.println("   <title>Alterar dados do estudante</title>");
+                        out.println("   <title>Alterar dados do Método de Fila</title>");
                         out.println("    <style>");
                         out.println("        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }");
                         out.println("        .container { max-width: 600px; margin: 20px auto; padding: 20px; margin-top: 100px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }");
@@ -66,87 +70,76 @@ public class EstudanteController extends HttpServlet {
                         out.println("    </style>");
                         out.println("</head>");
                         out.println("<body>");
-                        out.println("    <div class=\"container\">");
-                        out.println("        <h1>Editar Estudante</h1>");
-                        out.println("        <a href='EstudanteController'>Ver estudantes cadastrados</a>");
-                        out.println("        <form method='post' action='EstudanteController'>");
-                        out.println("            <input type='hidden' name='codigo' value='" + eEdit.getCodigo() + "'/>");
-                        out.println("            <label for=\"nome\">Nome:</label>");
-                        out.println("            <input type='text' id=\"nome\" name='nome' value='" + eEdit.getNome() + "'/>");
-                        out.println("            <label for=\"email\">E-mail:</label>");
-                        out.println("            <input type='text' id=\"email\" name='email' value='" + eEdit.getEmail() + "'/>");
-                        out.println("            <label for=\"anoEntrada\">Ano de entrada:</label>");
-                        out.println("            <textarea id=\"anoEntrada\" name='anoEntrada'>" + eEdit.getAnoEntrada() + "</textarea>");
+                        out.println("    <div class='container'>");
+                        out.println("        <h1>Editar Método de Fila</h1>");
+                        out.println("        <form method='post'>");
+                        out.println("            <input type='hidden' name='codigo' value='" + mfEdit.getCodigo() + "'/>");
+                        out.println("            <label for='descricaoCurta'>Descrição Curta:</label>");
+                        out.println("            <input type='text' id='descricaoCurta' name='descricaoCurta' value='" + mfEdit.getDescricaoCurta() + "'/>");
+                        out.println("            <label for='descricaoLonga'>Descrição Longa:</label>");
+                        out.println("            <input type='text' id='descricaoLonga' name='descricaoLonga' value='" + mfEdit.getDescricaoLonga() + "'/>");
                         out.println("            <input type='submit' value='Editar'/>");
                         out.println("        </form>");
                         out.println("    </div>");
                         out.println("</body>");
                         out.println("</html>");
-
                         return;
-
                     }
-
                 }
 
                 /*
                  dentro deste if está o código para realizar o delete de estudante
                 */
-                
+
                 if (request.getParameter("op").equals("delete")) {
 
-                    EstudanteRepository.delete(codigo);
+                    MetodoFilaRepository.delete(codigo);
 
                     response.setContentType("text/html;charset=UTF-8");
 
                     try (PrintWriter out = response.getWriter()) {
-                        /* Deleta o estudante */
                         out.println("<!DOCTYPE html>");
                         out.println("<html lang='pt-BR'>");
                         out.println("<head>");
                         out.println("    <meta charset='UTF-8'>");
-                        out.println("    <meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-                        out.println("    <title>Remover Estudante</title>");
+                        out.println("    <title>Remover Método</title>");
                         out.println("    <style>");
                         out.println("        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }");
                         out.println("        .container { max-width: 600px; margin: auto; padding: 20px; margin-top: 100px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,.1); }");
-                        out.println("        h1 { color: #333; }");
-                        out.println("        a { display: inline-block; margin-top: 20px; padding: 10px 15px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; }");
+                        out.println("        h1 { color: #333; text-align: center; }");
+                        out.println("        a { display: block; text-align: center; margin-top: 20px; background-color: #007bff; color: #fff; padding: 10px 15px; border-radius: 5px; text-decoration: none; }");
                         out.println("        a:hover { background-color: #0056b3; }");
                         out.println("    </style>");
                         out.println("</head>");
                         out.println("<body>");
                         out.println("    <div class='container'>");
-                        out.println("        <h1>O Estudante foi deletado com sucesso!</h1>");
-                        out.println("        <a href='EstudanteController'>Estudantes Cadastrados</a>");
+                        out.println("        <h1>O Método de Fila foi deletado com sucesso!</h1>");
+                        out.println("        <a href='MetodoFilaController'>Metodo Fila Cadastrados</a>");
                         out.println("    </div>");
                         out.println("</body>");
                         out.println("</html>");
                     }
-
                 }
-
             }
-            
+
             /*
-                O código a baixo apresenta a tabela com todos os 
-                estudantes cadastrados. Este código é executado quando
-                o EstudanteServlet é chamado sem parametros
+                O código abaixo apresenta a tabela com todos os 
+                métodos de fila cadastrados. Este código é executado quando
+                o MetodoFilaServlet é chamado sem parametros
             */
 
-            Estudante estudante = EstudanteRepository.read(codigo);
+            MetodoFila metodoFila = MetodoFilaRepository.read(codigo);
 
             response.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
-                /* Exibe os detalhes do estudante */
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
-                out.println("<title>Estudantes</title>");
+                out.println("<title>Métodos de Fila</title>");
                 out.println("<style>");
-                out.println("    body { font-family: Arial, sans-serif; margin: 0; margin-top: 100px; padding: 0; background-color: #f7f7f7; }");
+                out.println("    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f7f7f7; }");
                 out.println("    .container { max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }");
-                out.println("    h1 { color: #333; }");
+                out.println("    h1 { color: #333; text-align: center; }");
                 out.println("    h5 { color: #666; }");
                 out.println("    a { text-decoration: none; color: #007bff; }");
                 out.println("    a:hover { text-decoration: underline; }");
@@ -154,14 +147,12 @@ public class EstudanteController extends HttpServlet {
                 out.println("</head>");
                 out.println("<body>");
                 out.println("<div class='container'>");
-                out.println("    <h1>Estudante cadastrado no sistema</h1>");
+                out.println("    <h1>Método de Fila cadastrado no sistema</h1>");
                 out.println("    <div>");
-                out.println("        <h5>Código: " + estudante.getCodigo() + "</h5>");
-                out.println("        <h5>Nome: " + estudante.getNome() + "</h5>");
-                out.println("        <h5>E-mail: " + estudante.getEmail() + "</h5>");
-                out.println("        <h5>Ano de entrada: " + estudante.getAnoEntrada() + "</h5>");
+                out.println("        <h5>Código: " + metodoFila.getCodigo() + "</h5>");
+                out.println("        <h5>Descrição Curta: " + metodoFila.getDescricaoCurta() + "</h5>");
+                out.println("        <h5>Descrição Longa: " + metodoFila.getDescricaoLonga() + "</h5>");
                 out.println("    </div>");
-                out.println("    <a href='EstudanteController'>Ver outros estudantes cadastrados</a>");
                 out.println("</div>");
                 out.println("</body>");
                 out.println("</html>");
@@ -169,17 +160,14 @@ public class EstudanteController extends HttpServlet {
             return;
         }
 
-        List<Estudante> estudantes = EstudanteRepository.readAll();
+        List<MetodoFila> metodosFila = MetodoFilaRepository.readAll();
 
-        /*response.setContentType("application/pdf");
-        response.getOutputStream().write(bytes);*/
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* Tabela de exibição estudantes cadastrados */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Estudantes</title>");
+            out.println("<title>Métodos de Fila</title>");
             out.println("<style>");
             out.println("  body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }");
             out.println("  table { width: 100%; border-collapse: collapse; margin-top: 20px; }");
@@ -195,31 +183,30 @@ public class EstudanteController extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("  <div class='header'>");
-            out.println("    <h1>Estudantes cadastrados</h1>");
+            out.println("    <h1>Métodos de Fila cadastrados</h1>");
             out.println("    <a href='index.html'>Home</a>");
             out.println("  </div>");
-            out.println("  <table>");
-            out.println("    <tr><th>Código</th><th>Nome</th><th>E-mail</th><th>Ano de entrada</th><th>Ações</th></tr>");
+            out.println("    <table>");
+            out.println("      <tr><th>Código</th><th>Descrição Curta</th><th>Descrição Longa</th><th>Ações</th></tr>");
 
-            for (Estudante est : estudantes) {
+            for (MetodoFila mf : metodosFila) {
                 out.println("    <tr>");
-                out.println("      <td>" + est.getCodigo() + "</td>");
-                out.println("      <td>" + est.getNome() + "</td>");
-                out.println("      <td>" + est.getEmail() + "</td>");
-                out.println("      <td>" + est.getAnoEntrada() + "</td>");
+                out.println("      <td>" + mf.getCodigo() + "</td>");
+                out.println("      <td>" + mf.getDescricaoCurta() + "</td>");
+                out.println("      <td>" + mf.getDescricaoLonga() + "</td>");
                 out.println("      <td>");
-                out.println("        <a href='EstudanteController?codigo=" + est.getCodigo() + "'>Detalhar</a> | ");
-                out.println("        <a href='EstudanteController?codigo=" + est.getCodigo() + "&op=edit'>Editar</a> | ");
-                out.println("        <a href='EstudanteController?codigo=" + est.getCodigo() + "&op=delete'>Deletar</a>");
+                out.println("        <a href='MetodoFilaController?codigo=" + mf.getCodigo() + "'>Detalhar</a> | ");
+                out.println("        <a href='MetodoFilaController?codigo=" + mf.getCodigo() + "&op=edit'>Editar</a> | ");
+                out.println("        <a href='MetodoFilaController?codigo=" + mf.getCodigo() + "&op=delete'>Deletar</a>");
                 out.println("      </td>");
                 out.println("    </tr>");
             }
 
             out.println("  </table>");
+            out.println("</div>");
             out.println("</body>");
             out.println("</html>");
-
-        }         
+        }
     }
 
     /**
@@ -235,30 +222,27 @@ public class EstudanteController extends HttpServlet {
             throws ServletException, IOException {
         
         int codigo = Integer.parseInt(request.getParameter("codigo"));
-        String nome = request.getParameter("nome");
-        String email = request.getParameter("email");
-        int anoEntrada = Integer.parseInt(request.getParameter("anoEntrada"));
+        String descricaoCurta = request.getParameter("descricaoCurta");
+        String descricaoLonga = request.getParameter("descricaoLonga");
 
-        Estudante est = new Estudante();
+        MetodoFila metodoFila = new MetodoFila();
 
-        est.setCodigo(codigo);
-        est.setNome(nome);
-        est.setEmail(email);
-        est.setAnoEntrada(anoEntrada);
+        metodoFila.setCodigo(codigo);
+        metodoFila.setDescricaoCurta(descricaoCurta);
+        metodoFila.setDescricaoLonga(descricaoLonga);
 
-        Estudante estCadastrado = EstudanteRepository.read(codigo);
-        est.setSenha(estCadastrado.getSenha());
+        MetodoFila metodoFilaExistente = MetodoFilaRepository.read(codigo);
 
-        EstudanteRepository.update(est);
+        MetodoFilaRepository.update(metodoFila);
 
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
-            /* Alteração estudante */
+            /* Alteração do Método de Fila */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Alteração de Estudante</title>");
+            out.println("<title>Alteração de Método de Fila</title>");
             out.println("<style>");
             out.println("  body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }");
             out.println("  a { background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; }");
@@ -267,12 +251,11 @@ public class EstudanteController extends HttpServlet {
             out.println("</style>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>O estudante " + nome + " foi alterado com sucesso</h1>");
-            out.println("<a href='EstudanteController'>Estudantes Cadastrados</a>");
+            out.println("<h1>O método de fila '" + descricaoCurta + "' foi alterado com sucesso</h1>");
+            out.println("<a href='MetodoFilaController'>Voltar aos Métodos de Fila</a>");
             out.println("</body>");
             out.println("</html>");
-
-        }
+        }        
     }
 
     /**

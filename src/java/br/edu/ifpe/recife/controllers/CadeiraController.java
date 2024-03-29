@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.edu.ifpe.recife.controllers;
 
-import br.edu.ifpe.recife.model.entities.Estudante;
-import br.edu.ifpe.recife.model.repositories.EstudanteRepository;
+import br.edu.ifpe.recife.model.entities.Cadeira;
+import br.edu.ifpe.recife.model.repositories.CadeiraRepository;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -13,10 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ALUNO
+ * @author jamilly
  */
-@WebServlet(name = "EstudanteController", urlPatterns = {"/EstudanteController"})
-public class EstudanteController extends HttpServlet {
+@WebServlet(name = "CadeiraController", urlPatterns = {"/CadeiraController"})
+public class CadeiraController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -30,28 +35,22 @@ public class EstudanteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if (request.getParameter("codigo") != null) {
+                if (request.getParameter("codigo") != null) {
 
             int codigo = Integer.parseInt(request.getParameter("codigo"));
             
-            /*
-                 dentro deste if está o código que apresenta o 
-                 formulário de alteração
-                */
             if (request.getParameter("op") != null) {
 
                 if (request.getParameter("op").equals("edit")) {
 
-                    Estudante eEdit = EstudanteRepository.read(codigo);
+                    Cadeira cEdit = CadeiraRepository.read(codigo);
 
                     response.setContentType("text/html;charset=UTF-8");
                     try (PrintWriter out = response.getWriter()) {
-                        /* Altera o estudante */
                         out.println("<!DOCTYPE html>");
                         out.println("<html>");
                         out.println("<head>");
-                        out.println("   <title>Alterar dados do estudante</title>");
+                        out.println("   <title>Alterar dados da cadeira</title>");
                         out.println("    <style>");
                         out.println("        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }");
                         out.println("        .container { max-width: 600px; margin: 20px auto; padding: 20px; margin-top: 100px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }");
@@ -67,16 +66,18 @@ public class EstudanteController extends HttpServlet {
                         out.println("</head>");
                         out.println("<body>");
                         out.println("    <div class=\"container\">");
-                        out.println("        <h1>Editar Estudante</h1>");
-                        out.println("        <a href='EstudanteController'>Ver estudantes cadastrados</a>");
-                        out.println("        <form method='post' action='EstudanteController'>");
-                        out.println("            <input type='hidden' name='codigo' value='" + eEdit.getCodigo() + "'/>");
+                        out.println("        <h1>Editar Cadeira</h1>");
+                        out.println("        <a href='CadeiraController'>Ver cadeiras cadastradas</a>");
+                        out.println("        <form method='post' action='CadeiraController'>");
+                        out.println("            <input type='hidden' name='codigo' value='" + cEdit.getCodigo() + "'/>");
                         out.println("            <label for=\"nome\">Nome:</label>");
-                        out.println("            <input type='text' id=\"nome\" name='nome' value='" + eEdit.getNome() + "'/>");
-                        out.println("            <label for=\"email\">E-mail:</label>");
-                        out.println("            <input type='text' id=\"email\" name='email' value='" + eEdit.getEmail() + "'/>");
-                        out.println("            <label for=\"anoEntrada\">Ano de entrada:</label>");
-                        out.println("            <textarea id=\"anoEntrada\" name='anoEntrada'>" + eEdit.getAnoEntrada() + "</textarea>");
+                        out.println("            <input type='text' id=\"nome\" name='nome' value='" + cEdit.getNome() + "'/>");
+                        out.println("            <label for=\"ano\">Ano:</label>");
+                        out.println("            <input type='text' id=\"ano\" name='ano' value='" + cEdit.getAno() + "'/>");
+                        out.println("            <label for=\"semestre\">Semestre:</label>");
+                        out.println("            <input type='text' id=\"semestre\" name='semestre' value='" + cEdit.getSemestre() + "'/>");
+                        out.println("            <label for=\"descricao\">Descrição:</label>");
+                        out.println("            <textarea id=\"descricao\" name='descricao'>" + cEdit.getDescricao() + "</textarea>");
                         out.println("            <input type='submit' value='Editar'/>");
                         out.println("        </form>");
                         out.println("    </div>");
@@ -84,29 +85,23 @@ public class EstudanteController extends HttpServlet {
                         out.println("</html>");
 
                         return;
-
                     }
 
                 }
 
-                /*
-                 dentro deste if está o código para realizar o delete de estudante
-                */
-                
                 if (request.getParameter("op").equals("delete")) {
 
-                    EstudanteRepository.delete(codigo);
+                    CadeiraRepository.delete(codigo);
 
                     response.setContentType("text/html;charset=UTF-8");
 
                     try (PrintWriter out = response.getWriter()) {
-                        /* Deleta o estudante */
                         out.println("<!DOCTYPE html>");
                         out.println("<html lang='pt-BR'>");
                         out.println("<head>");
                         out.println("    <meta charset='UTF-8'>");
                         out.println("    <meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-                        out.println("    <title>Remover Estudante</title>");
+                        out.println("    <title>Remover Cadeira</title>");
                         out.println("    <style>");
                         out.println("        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }");
                         out.println("        .container { max-width: 600px; margin: auto; padding: 20px; margin-top: 100px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,.1); }");
@@ -117,8 +112,8 @@ public class EstudanteController extends HttpServlet {
                         out.println("</head>");
                         out.println("<body>");
                         out.println("    <div class='container'>");
-                        out.println("        <h1>O Estudante foi deletado com sucesso!</h1>");
-                        out.println("        <a href='EstudanteController'>Estudantes Cadastrados</a>");
+                        out.println("        <h1>A Cadeira foi deletada com sucesso!</h1>");
+                        out.println("        <a href='CadeiraController'>Cadeiras Cadastradas</a>");
                         out.println("    </div>");
                         out.println("</body>");
                         out.println("</html>");
@@ -128,21 +123,14 @@ public class EstudanteController extends HttpServlet {
 
             }
             
-            /*
-                O código a baixo apresenta a tabela com todos os 
-                estudantes cadastrados. Este código é executado quando
-                o EstudanteServlet é chamado sem parametros
-            */
-
-            Estudante estudante = EstudanteRepository.read(codigo);
+            Cadeira cadeira = CadeiraRepository.read(codigo);
 
             response.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
-                /* Exibe os detalhes do estudante */
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
-                out.println("<title>Estudantes</title>");
+                out.println("<title>Cadeiras</title>");
                 out.println("<style>");
                 out.println("    body { font-family: Arial, sans-serif; margin: 0; margin-top: 100px; padding: 0; background-color: #f7f7f7; }");
                 out.println("    .container { max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }");
@@ -154,14 +142,15 @@ public class EstudanteController extends HttpServlet {
                 out.println("</head>");
                 out.println("<body>");
                 out.println("<div class='container'>");
-                out.println("    <h1>Estudante cadastrado no sistema</h1>");
+                out.println("    <h1>Cadeira cadastrada no sistema</h1>");
                 out.println("    <div>");
-                out.println("        <h5>Código: " + estudante.getCodigo() + "</h5>");
-                out.println("        <h5>Nome: " + estudante.getNome() + "</h5>");
-                out.println("        <h5>E-mail: " + estudante.getEmail() + "</h5>");
-                out.println("        <h5>Ano de entrada: " + estudante.getAnoEntrada() + "</h5>");
+                out.println("        <h5>Código: " + cadeira.getCodigo() + "</h5>");
+                out.println("        <h5>Nome: " + cadeira.getNome() + "</h5>");
+                out.println("        <h5>Ano: " + cadeira.getAno() + "</h5>");
+                out.println("        <h5>Semestre: " + cadeira.getSemestre() + "</h5>");
+                out.println("        <h5>Descrição: " + cadeira.getDescricao() + "</h5>");
                 out.println("    </div>");
-                out.println("    <a href='EstudanteController'>Ver outros estudantes cadastrados</a>");
+                out.println("    <a href='CadeiraController'>Ver outras cadeiras cadastradas</a>");
                 out.println("</div>");
                 out.println("</body>");
                 out.println("</html>");
@@ -169,17 +158,14 @@ public class EstudanteController extends HttpServlet {
             return;
         }
 
-        List<Estudante> estudantes = EstudanteRepository.readAll();
+        List<Cadeira> cadeiras = CadeiraRepository.readAll();
 
-        /*response.setContentType("application/pdf");
-        response.getOutputStream().write(bytes);*/
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* Tabela de exibição estudantes cadastrados */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Estudantes</title>");
+            out.println("<title>Cadeiras</title>");
             out.println("<style>");
             out.println("  body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }");
             out.println("  table { width: 100%; border-collapse: collapse; margin-top: 20px; }");
@@ -195,22 +181,23 @@ public class EstudanteController extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("  <div class='header'>");
-            out.println("    <h1>Estudantes cadastrados</h1>");
+            out.println("    <h1>Cadeiras cadastradas</h1>");
             out.println("    <a href='index.html'>Home</a>");
             out.println("  </div>");
             out.println("  <table>");
-            out.println("    <tr><th>Código</th><th>Nome</th><th>E-mail</th><th>Ano de entrada</th><th>Ações</th></tr>");
+            out.println("    <tr><th>Código</th><th>Nome</th><th>Ano</th><th>Semestre</th><th>Descrição</th><th>Ações</th></tr>");
 
-            for (Estudante est : estudantes) {
+            for (Cadeira cadeira : cadeiras) {
                 out.println("    <tr>");
-                out.println("      <td>" + est.getCodigo() + "</td>");
-                out.println("      <td>" + est.getNome() + "</td>");
-                out.println("      <td>" + est.getEmail() + "</td>");
-                out.println("      <td>" + est.getAnoEntrada() + "</td>");
+                out.println("      <td>" + cadeira.getCodigo() + "</td>");
+                out.println("      <td>" + cadeira.getNome() + "</td>");
+                out.println("      <td>" + cadeira.getAno() + "</td>");
+                out.println("      <td>" + cadeira.getSemestre() + "</td>");
+                out.println("      <td>" + cadeira.getDescricao() + "</td>");
                 out.println("      <td>");
-                out.println("        <a href='EstudanteController?codigo=" + est.getCodigo() + "'>Detalhar</a> | ");
-                out.println("        <a href='EstudanteController?codigo=" + est.getCodigo() + "&op=edit'>Editar</a> | ");
-                out.println("        <a href='EstudanteController?codigo=" + est.getCodigo() + "&op=delete'>Deletar</a>");
+                out.println("        <a href='CadeiraController?codigo=" + cadeira.getCodigo() + "'>Detalhar</a> | ");
+                out.println("        <a href='CadeiraController?codigo=" + cadeira.getCodigo() + "&op=edit'>Editar</a> | ");
+                out.println("        <a href='CadeiraController?codigo=" + cadeira.getCodigo() + "&op=delete'>Deletar</a>");
                 out.println("      </td>");
                 out.println("    </tr>");
             }
@@ -219,7 +206,8 @@ public class EstudanteController extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
 
-        }         
+        }        
+        
     }
 
     /**
@@ -236,29 +224,30 @@ public class EstudanteController extends HttpServlet {
         
         int codigo = Integer.parseInt(request.getParameter("codigo"));
         String nome = request.getParameter("nome");
-        String email = request.getParameter("email");
-        int anoEntrada = Integer.parseInt(request.getParameter("anoEntrada"));
+        int ano = Integer.parseInt(request.getParameter("ano"));
+        int semestre = Integer.parseInt(request.getParameter("semestre"));
+        String descricao = request.getParameter("descricao");
 
-        Estudante est = new Estudante();
+        Cadeira cadeira = new Cadeira();
 
-        est.setCodigo(codigo);
-        est.setNome(nome);
-        est.setEmail(email);
-        est.setAnoEntrada(anoEntrada);
+        cadeira.setCodigo(codigo);
+        cadeira.setNome(nome);
+        cadeira.setAno(ano);
+        cadeira.setSemestre(semestre);
+        cadeira.setDescricao(descricao);
 
-        Estudante estCadastrado = EstudanteRepository.read(codigo);
-        est.setSenha(estCadastrado.getSenha());
+        Cadeira cadeiraCadastrada = CadeiraRepository.read(codigo);
 
-        EstudanteRepository.update(est);
+        CadeiraRepository.update(cadeira);
 
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
-            /* Alteração estudante */
+            /* Alteração de Cadeira */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Alteração de Estudante</title>");
+            out.println("<title>Alteração de Cadeira</title>");
             out.println("<style>");
             out.println("  body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }");
             out.println("  a { background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; }");
@@ -267,12 +256,13 @@ public class EstudanteController extends HttpServlet {
             out.println("</style>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>O estudante " + nome + " foi alterado com sucesso</h1>");
-            out.println("<a href='EstudanteController'>Estudantes Cadastrados</a>");
+            out.println("<h1>A cadeira " + nome + " foi alterada com sucesso</h1>");
+            out.println("<a href='CadeiraController'>Cadeiras Cadastradas</a>");
             out.println("</body>");
             out.println("</html>");
 
         }
+
     }
 
     /**

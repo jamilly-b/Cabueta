@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Estudante</title>
+    <title>Cadastrar MetodoFila</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -74,21 +74,16 @@
 <body>
     <div>
         <h1>Cadastrar estudante</h1>
-        <form method="post" action="CadastroEstudanteServlet"> 
-            <label for="codigo">Código do estudante:</label>
-            <input type="text" id="codigo" name="codigo" placeholder="Código do estudante" required>
+        <form method="post" action="CadastroMetodoFilaServlet"> 
+            <label for="codigo">Código:</label>
+            <input type="text" id="codigo" name="codigo" placeholder="Código do método" required>
             
-            <label for="nome">Nome do estudante:</label>
-            <input type="text" id="nome" name="nome" placeholder="Nome do estudante" required>
+            <label for="descricaoCurta">Descrição curta:</label>
+            <input type="text" id="descCurta" name="descricaoCurta" placeholder="Descricao Curta do método de fila" required>
             
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Email" required>
+            <label for="descricaoLonga">Descrição Longa:</label>
+            <input type="text" id="descLonga" name="descricaoLonga" placeholder="Descricao Longa do método de fila" required>
             
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" placeholder="Senha" required>
-        
-            <label for="anoEntrada">Ano de Entrada do Estudante:</label>
-            <input type="number" id="anoEntrada" name="anoEntrada" min="1990" max="2024" step="1" required>
             <br>
             <input type="submit" value="Enviar">
         </form>   
