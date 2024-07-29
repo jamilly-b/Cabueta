@@ -10,6 +10,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cadastrar Professor</title>
+        
+        <style>
+            body{
+                background-color: white;
+            }
+        </style>
     </head>
     <body>
         <h1>Cadastrar professor</h1>

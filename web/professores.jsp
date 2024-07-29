@@ -4,6 +4,9 @@
     Author     : jamilly
 --%>
 
+<%@page import="br.edu.ifpe.recife.model.entities.Professor"%>
+<%@page import="java.util.List"%>
+<%@page import="br.edu.ifpe.recife.model.repositories.ProfessorRepository"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,6 +20,7 @@
             String mensagem = (String)session.getAttribute("msg");
             if(mensagem != null){
                 out.println("<h2>"+mensagem+"</h2>");
+                session.removeAttribute("msg");
             }
         %>
         
@@ -29,6 +33,34 @@
             <br/>
             <button onclick="modalclose()">fechar</button>
         </div>
+            
+        <%
+        
+            List<Professor> professores = ProfessorRepository.readAll();
+        %> 
+        
+        <table>
+            <tr>
+                <th>Código</th><th>Nome</th><th>Email</th>
+            </tr>
+            <%
+                for(Professor professor : professores){
+            %>
+            <tr>
+                <td><%= professor.getCodigo()%></td>
+                <td><%= professor.getNome()%></td>
+                <td><%= professor.getEmail()%></td>
+            </tr>
+            <%}%>
+        </table>
+        
+            
+
+
+        
+           
+            
+            
         
         <script>
             var modal = document.getElementById("modal");
