@@ -34,6 +34,14 @@ public class ProfessorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        int codigo = Integer.parseInt(request.getParameter("codigo"));
+        String redirect = request.getParameter("redirect");
+        
+        Professor p = ProfessorRepository.read(codigo);
+        
+        request.setAttribute("professor", p);
+        
+        getServletContext().getRequestDispatcher("/professores.jsp").forward(request, response);
     }
 
     /**
