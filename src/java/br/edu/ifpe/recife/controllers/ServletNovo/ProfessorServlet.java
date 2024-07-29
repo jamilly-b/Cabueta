@@ -65,7 +65,7 @@ public class ProfessorServlet extends HttpServlet {
         HttpSession session = request.getSession();
         
         session.setAttribute("msg", "Professor " + p.getNome() + " foi cadastrado com sucesso.");
-        response.sendRedirect("jsps/professores.jsp");
+        response.sendRedirect("professores.jsp");
     
     }
 
