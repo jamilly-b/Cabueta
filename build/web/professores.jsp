@@ -58,7 +58,9 @@
                 <td><%= professor.getCodigo()%></td>
                 <td><%= professor.getNome()%></td>
                 <td><%= professor.getEmail()%></td>
-                <td><a href="ProfessorServlet?codigo=<%=professor.getCodigo()%>&redirect=visualiza">visualizar</td>
+                <td><a href="ProfessorServlet?codigo=<%=professor.getCodigo()%>&redirect=visualiza">visualizar</a>
+                    <a href="ProfessorServlet?codigo=<%=professor.getCodigo()%>&redirect=atualiza">editar</a>
+                </td>
             </tr>
             <% } %>
         </table>        

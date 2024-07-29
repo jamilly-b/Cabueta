@@ -61,6 +61,8 @@ public class ProfessorServlet extends HttpServlet {
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
         
+        String a = request.getParameter("atualizar");
+        
         Professor p = new Professor();
         
         p.setNome(nome);
@@ -68,13 +70,18 @@ public class ProfessorServlet extends HttpServlet {
         p.setEmail(email);
         p.setSenha(senha);
         
-        ProfessorRepository.create(p);
-        
         HttpSession session = request.getSession();
         
-        session.setAttribute("msg", "Professor " + p.getNome() + " foi cadastrado com sucesso.");
+        if(a != null){
+             ProfessorRepository.update(p);
+             session.setAttribute("msg", "Professor " + p.getNome() + " foi atualizado com sucesso!");
+        
+        } else {     
+            ProfessorRepository.create(p);
+            session.setAttribute("msg", "Professor " + p.getNome() + " foi cadastrado com sucesso.");
+        }
+        
         response.sendRedirect("professores.jsp");
-    
     }
 
     /**

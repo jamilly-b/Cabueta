@@ -21,12 +21,13 @@
         <h1>Cadastrar professor</h1>
         
         <form method="post" action="ProfessorServlet">
-            Código: <input type="number" name="codigo"></br>
-            Nome: <input type="text" name="nome"></br>
-            Email: <input type="email" name="email"></br>
-            Senha: <input type="password" name="senha"></br>
+            Código: <input type="number" name="codigo" value="${(param.redirect != null && param["redirect"] eq 'atualiza')?produto.codigo:''}"></br>
+            Nome: <input type="text" name="nome" value="${(param.redirect != null && param["redirect"] eq 'atualiza')?produto.nome:''}"></br>
+            Email: <input type="email" name="email" value="${(param.redirect != null && param["redirect"] eq 'atualiza')?produto.email:''}"></br>
+            Senha: <input type="password" name="senha" value="${(param.redirect != null && param["redirect"] eq 'atualiza')?produto.senha:''}"></br>
             
-            <input type="submit" value="cadastrar"/>
+            <input type="hidden" name="${(param.redirect != null && param["redirect"] eq 'atualiza')?'atualizar':'cadastrar'}" value="1"/>
+            <input type="submit" value="${(param.redirect != null && param["redirect"] eq 'atualiza')?'atualizar':'cadastrar'}"/>
         </form>
     </body>
 </html>
