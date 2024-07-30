@@ -84,6 +84,20 @@ public class ProfessorServlet extends HttpServlet {
         response.sendRedirect("professores.jsp");
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        super.doDelete(request, response); //To change body of generated methods, choose Tools | Templates.
+    
+        int codigo = Integer.parseInt(request.getParameter("codigo"));
+        
+        Professor p = ProfessorRepository.read(codigo);
+        
+        ProfessorRepository.delete(codigo);
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("msg", "Professor "+ p.getNome() + " excluído.");
+    }
+    
     /**
      * Returns a short description of the servlet.
      *

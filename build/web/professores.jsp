@@ -60,6 +60,7 @@
                 <td><%= professor.getEmail()%></td>
                 <td><a href="ProfessorServlet?codigo=<%=professor.getCodigo()%>&redirect=visualiza">visualizar</a>
                     <a href="ProfessorServlet?codigo=<%=professor.getCodigo()%>&redirect=atualiza">editar</a>
+                    <a href="ProfessorServletNovo?codigo=<%=professor.getCodigo()%>&op=delete" onclick="deleteProfessor(<%=professor.getCodigo()%>)">deletar</a>
                 </td>
             </tr>
             <% } %>
@@ -93,6 +94,14 @@
             function modalopen() {
                 document.body.appendChild(modal);
             }
+            
+            function deleteProfessor(codigo){
+                fetch("ProfessorServlet?codigo="+codigo,{method:'delete'})
+                    .then(function(response){
+                        location.reload();
+                });
+            };
+            
         </script>
         
     </body>
