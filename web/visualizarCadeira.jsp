@@ -6,6 +6,7 @@
 
 <%@page import="br.edu.ifpe.recife.model.entities.Cadeira"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="/WEB-INF/tlds/tagCabueta" prefix="web2" %> 
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,11 +14,16 @@
         <title>Visualizar cadeiras</title>
     </head>
     <body>
+        
         <h1>Cadeira</h1>
         <%
             Cadeira c = (Cadeira) request.getAttribute("cadeira");
             if (c != null) {
         %>
+        
+        
+        <web2:carrega entidade="cadeira" var="cadeiras" escopo="pagina" codigo="${param.codigo}"/>
+        <h3>${pageScope.cadeiras.nome}</h3>
 
         <table>
             <tr>

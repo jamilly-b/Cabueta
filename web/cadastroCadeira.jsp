@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="/WEB-INF/tlds/tagCabueta" prefix="web2" %> 
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,6 +14,9 @@
     </head>
     <body>
         <h1>Cadastrar cadeira</h1>
+        
+        <web2:carrega entidade="cadeira" var="cadeiras" escopo="pagina"/>
+        <h2>${pageScope.cadeiras.size()}</h2> 
         
         <form method="post" action="CadeiraServlet">
             Código: <input type="number" name="codigo" value="${(param.redirect != null && param["redirect"] eq 'atualiza')? cadeira.codigo : ''}"></br>
